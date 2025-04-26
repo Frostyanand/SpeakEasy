@@ -1,5 +1,5 @@
 
-# Project Title: **SpeakEasy**
+# **SpeakEasy**
 
 ## Overview
 
