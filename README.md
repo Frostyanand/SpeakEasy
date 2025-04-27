@@ -1,4 +1,3 @@
-
 # **SpeakEasy**
 
 ## Overview
@@ -164,27 +163,33 @@ Emails will be sent using Gmail's SMTP server through a secured application pass
    cd your-repo-name
    ```
 
-2. Install dependencies:
+2. Create a virtual environment:
+   ```
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Set up environment variables in `.env` file:
+4. Create a `.env` file in the root directory with the following variables:
    ```
-   MONGO_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret_key
+   MONGO_URI=your_mongo_uri_here
+   JWT_SECRET=your_jwt_secret_here
    EMAIL_HOST=smtp.gmail.com
    EMAIL_PORT=587
    EMAIL_USER=your_email@gmail.com
    EMAIL_PASS=your_app_password
    ```
 
-4. Run the server:
+5. Run the application:
    ```bash
    python app.py
    ```
 
-5. Import Postman collection and start testing APIs.
+6. Import Postman collection and start testing APIs.
 
 ---
 
@@ -199,5 +204,25 @@ Emails will be sent using Gmail's SMTP server through a secured application pass
 Special thanks to **Google Developer Groups on Campus SRM** for organizing this opportunity to build and showcase technical skills.
 
 ---
+
+# SpeakEasy - Speaker Session Booking System
+
+A Flask-based API for managing speaker sessions and bookings.
+
+## Project Structure
+
+```
+/app.py - Main Flask application
+/models/ - Database models
+/routes/ - API routes
+/services/ - Business logic services
+/utils/ - Utility functions and helpers
+config.py - Configuration settings
+requirements.txt - Project dependencies
+```
+
+## API Endpoints
+
+- `GET /` - Health check endpoint
 
  
