@@ -4,6 +4,7 @@ import os
 from config import mongo_client
 from routes.auth_routes import auth_bp
 from routes.speaker_routes import speaker_bp
+from routes.booking_routes import booking_bp
 
 # Load environment variables
 load_dotenv()
@@ -21,6 +22,7 @@ except Exception as e:
 # Register blueprints
 app.register_blueprint(auth_bp, url_prefix='/api')
 app.register_blueprint(speaker_bp, url_prefix='/api')
+app.register_blueprint(booking_bp, url_prefix='/api')
 
 @app.route('/')
 def health_check():

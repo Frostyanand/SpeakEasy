@@ -178,12 +178,19 @@ Emails will be sent using Gmail's SMTP server through a secured application pass
    ```
    MONGO_URI=your_mongo_uri_here
    JWT_SECRET=your_jwt_secret_here
-   EMAIL_HOST=smtp.gmail.com
-   EMAIL_PORT=587
-   EMAIL_USER=your_email@gmail.com
-   EMAIL_PASS=your_app_password
+   
+   # Email settings (for booking confirmations)
+   SMTP_SERVER=smtp.gmail.com
+   SMTP_PORT=465
+   SMTP_EMAIL=your_email@gmail.com
+   SMTP_PASSWORD=your_email_app_password
    ```
-
+   
+   **Note for Gmail users**: 
+   - If using Gmail, you'll need to use an App Password instead of your regular password
+   - Go to your Google Account > Security > 2-Step Verification > App passwords
+   - Generate a new app password for "Mail" and use it for SMTP_PASSWORD
+   
 5. Run the application:
    ```bash
    python app.py
@@ -221,8 +228,58 @@ config.py - Configuration settings
 requirements.txt - Project dependencies
 ```
 
+## Setup Instructions
+
+1. Clone the repository
+2. Create a virtual environment:
+   ```
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+4. Create a `.env` file in the root directory with the following variables:
+   ```
+   MONGO_URI=your_mongo_uri_here
+   JWT_SECRET=your_jwt_secret_here
+   
+   # Email settings (for booking confirmations)
+   SMTP_SERVER=smtp.gmail.com
+   SMTP_PORT=465
+   SMTP_EMAIL=your_email@gmail.com
+   SMTP_PASSWORD=your_email_app_password
+   ```
+   
+   **Note for Gmail users**: 
+   - If using Gmail, you'll need to use an App Password instead of your regular password
+   - Go to your Google Account > Security > 2-Step Verification > App passwords
+   - Generate a new app password for "Mail" and use it for SMTP_PASSWORD
+   
+5. Run the application:
+   ```
+   python app.py
+   ```
+
 ## API Endpoints
 
+### Authentication
+- `POST /api/signup` - Register a new user or speaker
+- `POST /api/login` - Login and receive JWT token
+- `GET /api/profile` - Get user profile (protected)
+
+### Speaker Management
+- `POST /api/speaker/profile` - Create or update speaker profile
+- `GET /api/speaker/profile` - Get speaker's own profile
+- `GET /api/speakers` - List all available speakers
+
+### Session Booking
+- `POST /api/speaker/create-session` - Create a new session (speaker only)
+- `POST /api/book-session` - Book a seat in a session (user only)
+- `GET /api/my-bookings` - Get user's bookings or speaker's sessions
+
+### System
 - `GET /` - Health check endpoint
 
  

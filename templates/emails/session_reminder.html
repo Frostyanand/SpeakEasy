@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #4a90e2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+        .content {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 0 0 5px 5px;
+        }
+        .details {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⏰ Session Reminder</h1>
+    </div>
+    <div class="content">
+        <p>Hi {{ recipient_name }},</p>
+        
+        <p>This is a friendly reminder about your upcoming session:</p>
+        
+        <div class="details">
+            <h3>Session Details</h3>
+            <p><strong>Date:</strong> {{ session_date }}</p>
+            <p><strong>Time:</strong> {{ session_time }}</p>
+            <p><strong>Speaker:</strong> {{ speaker_name }}</p>
+            <p><strong>Topic:</strong> {{ session_topic }}</p>
+        </div>
+        
+        <p>The session will be held in {{ session_location }}. Please make sure to arrive a few minutes early to get settled.</p>
+        
+        <p>If you need to make any changes or have questions, please contact us as soon as possible.</p>
+        
+        <p>Best regards,<br>The SpeakEasy Team</p>
+        
+        <div class="footer">
+            <p>This is an automated message. Please do not reply directly to this email.</p>
+        </div>
+    </div>
+</body>
+</html> 
