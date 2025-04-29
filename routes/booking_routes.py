@@ -71,7 +71,7 @@ def create_speaker_session():
         }), 201
         
     except ValueError as e:
-        return jsonify({'error': str(e)}), 409
+        return jsonify({'error': str(e)}), 400
     except Exception as e:
         return jsonify({'error': 'Failed to create session'}), 500
 

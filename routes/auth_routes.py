@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from services.auth_service import email_exists, save_user, authenticate_user
+from services.auth_service import email_exists, save_user, authenticate_user, verify_otp
 from utils.auth_middleware import token_required, role_required
 
 # Create a new Blueprint for authentication routes
@@ -38,9 +38,34 @@ def signup():
     
     # Return success response
     return jsonify({
-        'message': 'User created successfully',
+        'message': 'User created successfully. Please check your email for OTP verification.',
         'user_id': user_id
     }), 201
+
+@auth_bp.route('/verify-otp', methods=['POST'])
+def verify_user_otp():
+    """
+    Verify user's OTP and set account as verified
+    
+    This endpoint accepts an email and OTP code, verifies them,
+    and sets the user's account as verified if the OTP is correct.
+    """
+    # Get request data
+    data = request.get_json()
+    
+    # Check if email and otp are provided
+    if 'email' not in data or 'otp' not in data:
+        return jsonify({'error': 'Email and OTP are required'}), 400
+    
+    # Attempt to verify OTP
+    if verify_otp(data['email'], data['otp']):
+        return jsonify({
+            'message': 'OTP verified successfully!'
+        }), 200
+    else:
+        return jsonify({
+            'error': 'Invalid email or OTP'
+        }), 400
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
@@ -51,18 +76,21 @@ def login():
     if 'email' not in data or 'password' not in data:
         return jsonify({'error': 'Email and password are required'}), 400
     
-    # Attempt to authenticate user
-    token = authenticate_user(data['email'], data['password'])
-    
-    # Check if authentication was successful
-    if not token:
-        return jsonify({'error': 'Invalid email or password'}), 401
-    
-    # Return the token
-    return jsonify({
-        'message': 'Login successful',
-        'token': token
-    }), 200
+    try:
+        # Attempt to authenticate user
+        token = authenticate_user(data['email'], data['password'])
+        
+        # Check if authentication was successful
+        if not token:
+            return jsonify({'error': 'Invalid email or password'}), 401
+        
+        # Return the token
+        return jsonify({
+            'message': 'Login successful',
+            'token': token
+        }), 200
+    except ValueError as e:
+        return jsonify({'error': str(e)}), 401
 
 # Test protected route
 @auth_bp.route('/profile', methods=['GET'])

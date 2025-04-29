@@ -24,6 +24,7 @@ def create_session(speaker_id, date, time, max_seats):
     
     Raises:
         ValueError: If speaker already has a session at the same date and time
+        ValueError: If session time is not between 9:00 AM and 3:00 PM
     """
     # Check if speaker already has a session at this date and time
     existing_session = sessions_collection.find_one({
@@ -34,6 +35,21 @@ def create_session(speaker_id, date, time, max_seats):
     
     if existing_session:
         raise ValueError("You already have a session scheduled at this date and time")
+    
+    # Validate session time (between 9:00 AM and 3:00 PM)
+    try:
+        session_time = datetime.strptime(time, "%H:%M").time()
+        min_time = datetime.strptime("09:00", "%H:%M").time()
+        max_time = datetime.strptime("15:00", "%H:%M").time()  # 3:00 PM (last slot is 3-4 PM)
+        
+        if session_time < min_time or session_time > max_time:
+            raise ValueError("Sessions must be between 9:00 AM to 4:00 PM, 1-hour slots only.")
+    except ValueError as e:
+        # If the error is from the datetime.strptime, re-raise with our custom message
+        if "does not match format" in str(e):
+            raise ValueError("Invalid time format. Use HH:MM (24-hour format)")
+        # Otherwise re-raise the original error
+        raise
     
     # Create new session document
     session = {
@@ -106,6 +122,9 @@ def book_session(user_id, session_id):
     speaker = users_collection.find_one({"_id": ObjectId(session["speaker_id"])})
     
     if user and speaker:
+        # Get user's full name
+        user_name = f"{user['first_name']} {user['last_name']}"
+        
         # Send email confirmation
         try:
             send_booking_confirmation(
@@ -115,7 +134,8 @@ def book_session(user_id, session_id):
                     "date": session["date"],
                     "time": session["time"],
                     "speaker_name": f"{speaker['first_name']} {speaker['last_name']}"
-                }
+                },
+                user_name=user_name
             )
         except Exception as e:
             # Log error but don't affect booking status
