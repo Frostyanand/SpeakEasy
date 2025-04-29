@@ -2,7 +2,7 @@
 
 SpeakEasy is a comprehensive platform that connects speakers with users for booking and managing speaking sessions. The system facilitates session scheduling, booking management, and feedback collection, providing a seamless experience for both speakers and users.
 
-## 🚀 Features
+## Features
 
 - **User Authentication & Authorization**
   - Secure signup and login with JWT tokens
@@ -127,18 +127,18 @@ SpeakEasy/
 
 > For detailed API documentation, please refer to [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Python 3.8+
-- MongoDB
+- MongoDB (Preferably online hosted using Atlas )
 - SMTP Server (for emails)
 
 ### Installation
 
 1. Clone the repository
 ```bash
-git clone [repository-url]
+git clone [https://github.com/Frostyanand/SpeakEasy]
 cd SpeakEasy
 ```
 
@@ -213,7 +213,7 @@ All emails are HTML-formatted with responsive design and proper UTF-8 encoding.
 - Input validation
 - Error handling
 
-## 🚀 Future Enhancements
+##  Future Enhancements
 
 1. **Frontend Development**
    - User-friendly web interface
@@ -232,16 +232,12 @@ All emails are HTML-formatted with responsive design and proper UTF-8 encoding.
    - Cloud deployment
    - Load balancing
 
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📞 Support
 
-For support, please contact [support@speakeasy.com](mailto:support@speakeasy.com)
+For support, please contact anuragsujit2005@gmail.com
 
  
