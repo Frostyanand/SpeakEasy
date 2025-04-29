@@ -146,6 +146,10 @@ def generate_calendar_invite(session_details, speaker_name, user_name=None):
         description += "\nThis is an automated calendar invite from SpeakEasy."
         
         # Create the iCalendar content with proper line endings (CRLF)
+        # Escape newlines first
+        escaped_description = description.replace('\n', '\\n')
+
+        # Create the iCalendar content with proper line endings (CRLF)
         ical_lines = [
             "BEGIN:VCALENDAR",
             "VERSION:2.0",
@@ -158,7 +162,7 @@ def generate_calendar_invite(session_details, speaker_name, user_name=None):
             f"DTSTART:{dtstart}",
             f"DTEND:{dtend}",
             f"SUMMARY:{summary}",
-            f"DESCRIPTION:{description.replace('\n', '\\n')}",
+            f"DESCRIPTION:{escaped_description}",
             "LOCATION:Online Meeting",
             "ORGANIZER;CN=SpeakEasy:mailto:no-reply@speakeasy.com",
             "STATUS:CONFIRMED",
