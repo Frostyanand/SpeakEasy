@@ -48,16 +48,12 @@
         .details p {
             margin: 8px 0;
         }
-        .button {
-            display: inline-block;
-            padding: 12px 25px;
-            background-color: #4a90e2;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-top: 15px;
-            font-weight: 500;
-            text-align: center;
+        .rating {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+            font-size: 24px;
+            color: #ffc107;
         }
         .footer {
             text-align: center;
@@ -67,49 +63,56 @@
             color: #666;
             border-top: 1px solid #eee;
         }
-        .important-note {
-            background-color: #fff8e1;
-            padding: 12px 15px;
+        .thank-you {
+            background-color: #e8f4fe;
+            padding: 15px;
             border-radius: 4px;
             margin: 20px 0;
-            border-left: 4px solid #ffc107;
+            text-align: center;
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>&#9200; Upcoming Session Reminder</h1>
+            <h1>&#128221; New Session Feedback</h1>
         </div>
         <div class="content">
-            <p>Hello {{ recipient_name }},</p>
+            <p>Hello {{ speaker_name }},</p>
             
-            <p>Your scheduled session is coming up soon! Please review the details below:</p>
+            <p>A participant has submitted feedback for one of your recent sessions. We're sharing this with you to help enhance your future sessions.</p>
             
             <div class="details">
                 <h3>Session Details</h3>
                 <p><strong>Date:</strong> {{ session_date }}</p>
                 <p><strong>Time:</strong> {{ session_time }}</p>
-                <p><strong>Speaker:</strong> {{ speaker_name }}</p>
-                <p><strong>Topic:</strong> {{ session_topic }}</p>
-                <p><strong>Location:</strong> {{ session_location }}</p>
+                <p><strong>Participant:</strong> {{ user_name }}</p>
             </div>
             
-            <div class="important-note">
-                <p><strong>Please note:</strong> We recommend arriving 10 minutes early to ensure a smooth start to the session.</p>
+            <div class="rating">
+                {% for i in range(rating) %}⭐{% endfor %}
+                <span>({{ rating }}/5)</span>
             </div>
             
-            <p>If you need to reschedule or have any questions, please contact us at <a href="mailto:support@speakeasy.com">support@speakeasy.com</a> as soon as possible.</p>
+            {% if feedback_text %}
+            <div class="details">
+                <h3>Feedback Comments</h3>
+                <p>{{ feedback_text }}</p>
+            </div>
+            {% endif %}
             
-            <p>Looking forward to a productive session!</p>
+            <div class="thank-you">
+                <p>Thank you for your continuous dedication to delivering quality sessions!</p>
+            </div>
+            
+            <p>If you have any questions about this feedback or need support, please don't hesitate to contact us at <a href="mailto:support@speakeasy.com">support@speakeasy.com</a>.</p>
             
             <p>Best regards,<br>The SpeakEasy Team</p>
-            
-            <a href="{{ calendar_link }}" class="button">Add to Calendar</a>
         </div>
         <div class="footer">
             <p>This is an automated message. Please do not reply directly to this email.</p>
-            <p>© 2023 SpeakEasy. All rights reserved.</p>
+            <p>© 2025 SpeakEasy. All rights reserved.</p>
         </div>
     </div>
 </body>

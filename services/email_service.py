@@ -42,11 +42,14 @@ def send_email(to_email, subject, body, is_html=False, attachments=None):
     msg["From"] = SMTP_EMAIL
     msg["To"] = to_email
     
+    # Set UTF-8 encoding for the message
+    msg.set_charset('utf-8')
+    
     # Attach content
     if is_html:
-        msg.attach(MIMEText(body, 'html'))
+        msg.attach(MIMEText(body, 'html', 'utf-8'))
     else:
-        msg.attach(MIMEText(body, 'plain'))
+        msg.attach(MIMEText(body, 'plain', 'utf-8'))
     
     # Add attachments if provided
     if attachments:
@@ -249,6 +252,121 @@ def send_booking_confirmation(user_email, speaker_email, session_details, user_n
         send_email(speaker_email, speaker_subject, speaker_html, is_html=True, attachments=attachments)
     except Exception as e:
         print(f"Failed to send notification email to speaker: {e}")
+        success = False
+    
+    return success
+
+def send_feedback_confirmation(user_email, speaker_email, session_details, user_name, rating, feedback_text=None):
+    """
+    Send feedback confirmation emails to both user and speaker using HTML templates
+    
+    Args:
+        user_email (str): User's email address
+        speaker_email (str): Speaker's email address
+        session_details (dict): Details of the session including:
+            - date: Session date
+            - time: Session time
+            - speaker_name: Full name of the speaker
+        user_name (str): Name of the user who submitted feedback
+        rating (int): Rating from 1 to 5
+        feedback_text (str, optional): Text feedback
+            
+    Returns:
+        bool: True if both emails sent successfully, False otherwise
+    """
+    # Extract session details
+    session_date = session_details.get("date")
+    session_time = session_details.get("time")
+    speaker_name = session_details.get("speaker_name")
+    
+    print(f"Preparing feedback emails with: User={user_name}, Speaker={speaker_name}, Rating={rating}")
+    
+    # Read HTML templates
+    try:
+        with open("templates/emails/feedback_confirmation.html", "r", encoding='utf-8') as file:
+            user_template = file.read()
+            print("Successfully loaded user feedback template")
+        
+        with open("templates/emails/feedback_confirmation_speaker.html", "r", encoding='utf-8') as file:
+            speaker_template = file.read()
+            print("Successfully loaded speaker feedback template")
+    except Exception as e:
+        print(f"Failed to read feedback email templates: {str(e)}")
+        return False
+    
+    try:
+        # Generate star rating HTML
+        stars_html = "⭐" * rating
+        rating_html = f'{stars_html} <span>({rating}/5)</span>'
+        
+        # Replace placeholders in user template
+        user_html = user_template.replace("{{ recipient_name }}", user_name)
+        user_html = user_html.replace("{{ speaker_name }}", speaker_name)
+        user_html = user_html.replace("{{ session_date }}", session_date)
+        user_html = user_html.replace("{{ session_time }}", session_time)
+        user_html = user_html.replace("{{ rating }}", str(rating))
+        user_html = user_html.replace('{% for i in range(rating) %}⭐{% endfor %}', stars_html)
+        
+        # Handle feedback text section
+        if feedback_text:
+            user_html = user_html.replace("{{ feedback_text }}", feedback_text)
+            user_html = user_html.replace("{% if feedback_text %}", "")
+            user_html = user_html.replace("{% endif %}", "")
+        else:
+            feedback_section_start = user_html.find("{% if feedback_text %}")
+            feedback_section_end = user_html.find("{% endif %}") + len("{% endif %}")
+            if feedback_section_start >= 0 and feedback_section_end > 0:
+                feedback_section = user_html[feedback_section_start:feedback_section_end]
+                user_html = user_html.replace(feedback_section, "")
+        
+        # Replace placeholders in speaker template
+        speaker_html = speaker_template.replace("{{ speaker_name }}", speaker_name)
+        speaker_html = speaker_html.replace("{{ session_date }}", session_date)
+        speaker_html = speaker_html.replace("{{ session_time }}", session_time)
+        speaker_html = speaker_html.replace("{{ user_name }}", user_name)
+        speaker_html = speaker_html.replace("{{ rating }}", str(rating))
+        speaker_html = speaker_html.replace('{% for i in range(rating) %}⭐{% endfor %}', stars_html)
+        
+        # Handle feedback text section in speaker template
+        if feedback_text:
+            speaker_html = speaker_html.replace("{{ feedback_text }}", feedback_text)
+            speaker_html = speaker_html.replace("{% if feedback_text %}", "")
+            speaker_html = speaker_html.replace("{% endif %}", "")
+        else:
+            feedback_section_start = speaker_html.find("{% if feedback_text %}")
+            feedback_section_end = speaker_html.find("{% endif %}") + len("{% endif %}")
+            if feedback_section_start >= 0 and feedback_section_end > 0:
+                feedback_section = speaker_html[feedback_section_start:feedback_section_end]
+                speaker_html = speaker_html.replace(feedback_section, "")
+        
+        print("Successfully processed templates and replaced placeholders")
+    except Exception as e:
+        print(f"Error processing template placeholders: {str(e)}")
+        return False
+    
+    # Create email subject lines
+    user_subject = "Feedback Confirmation - SpeakEasy"
+    speaker_subject = "New Session Feedback - SpeakEasy"
+    
+    # Send emails and catch any exceptions
+    success = True
+    
+    try:
+        # Send HTML email to user
+        print(f"Attempting to send feedback confirmation to user: {user_email}")
+        send_email(user_email, user_subject, user_html, is_html=True)
+        print("Successfully sent feedback confirmation to user")
+    except Exception as e:
+        print(f"Failed to send feedback confirmation email to user: {str(e)}")
+        success = False
+    
+    try:
+        # Send HTML email to speaker
+        print(f"Attempting to send feedback notification to speaker: {speaker_email}")
+        send_email(speaker_email, speaker_subject, speaker_html, is_html=True)
+        print("Successfully sent feedback notification to speaker")
+    except Exception as e:
+        print(f"Failed to send feedback notification email to speaker: {str(e)}")
         success = False
     
     return success 

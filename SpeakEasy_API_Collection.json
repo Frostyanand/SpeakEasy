@@ -1,0 +1,847 @@
+{
+	"info": {
+		"_postman_id": "a845d1c7-1f6a-4d8a-9d53-36b9b2c46d38",
+		"name": "SpeakEasy API Collection",
+		"description": "Complete API collection for the SpeakEasy platform. Includes authentication, speaker profile management, session booking, cancellation, and feedback submission endpoints.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12345678"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@example.com\",\n    \"password\": \"securePassword123\",\n    \"role\": \"user\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"signup"
+							]
+						},
+						"description": "Register a new user or speaker."
+					},
+					"response": [
+						{
+							"name": "Successful Signup",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@example.com\",\n    \"password\": \"securePassword123\",\n    \"role\": \"user\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/signup",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"signup"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User created successfully. Please check your email for OTP verification.\",\n    \"user_id\": \"60a1c3f9a6e6c3001c0a5b8a\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"jane.doe@example.com\",\n    \"otp\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/verify-otp",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"verify-otp"
+							]
+						},
+						"description": "Verify the OTP sent to the user's email."
+					},
+					"response": [
+						{
+							"name": "Successful OTP Verification",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"jane.doe@example.com\",\n    \"otp\": \"123456\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/verify-otp",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"verify-otp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"OTP verified successfully!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"jane.doe@example.com\",\n    \"password\": \"securePassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						},
+						"description": "Authenticate a user and get JWT token."
+					},
+					"response": [
+						{
+							"name": "Successful Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"jane.doe@example.com\",\n    \"password\": \"securePassword123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Login successful\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints for user authentication and account management."
+		},
+		{
+			"name": "Speaker Management",
+			"item": [
+				{
+					"name": "Create/Update Speaker Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"expertise\": \"JavaScript Development\",\n    \"bio\": \"10+ years of experience in frontend development\",\n    \"price_per_session\": 75.00\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/speaker/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"speaker",
+								"profile"
+							]
+						},
+						"description": "Create or update a speaker's profile."
+					},
+					"response": [
+						{
+							"name": "Profile Update Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"expertise\": \"JavaScript Development\",\n    \"bio\": \"10+ years of experience in frontend development\",\n    \"price_per_session\": 75.00\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/speaker/profile",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"speaker",
+										"profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Speaker profile updated successfully\",\n    \"profile_id\": \"60a1c3f9a6e6c3001c0a5b8b\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Speaker Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/speaker/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"speaker",
+								"profile"
+							]
+						},
+						"description": "Get the authenticated speaker's profile."
+					},
+					"response": [
+						{
+							"name": "Speaker Profile",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/speaker/profile",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"speaker",
+										"profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"profile\": {\n        \"expertise\": \"JavaScript Development\",\n        \"bio\": \"10+ years of experience in frontend development\",\n        \"price_per_session\": 75.00,\n        \"speaker_id\": \"60a1c3f9a6e6c3001c0a5b8a\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get All Speakers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/speakers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"speakers"
+							]
+						},
+						"description": "Get a list of all available speakers."
+					},
+					"response": [
+						{
+							"name": "List of Speakers",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/speakers",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"speakers"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"speakers\": [\n        {\n            \"speaker_id\": \"60a1c3f9a6e6c3001c0a5b8a\",\n            \"name\": \"John Smith\",\n            \"expertise\": \"JavaScript Development\",\n            \"bio\": \"10+ years of experience in frontend development\",\n            \"price_per_session\": 75.00\n        },\n        {\n            \"speaker_id\": \"60a1c4f9a6e6c3001c0a5b8c\",\n            \"name\": \"Jane Rogers\",\n            \"expertise\": \"Python & Data Science\",\n            \"bio\": \"Data scientist with focus on ML applications\",\n            \"price_per_session\": 90.00\n        }\n    ],\n    \"count\": 2\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints for managing speaker profiles and listings."
+		},
+		{
+			"name": "Session Management",
+			"item": [
+				{
+					"name": "Create Session (Speaker)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2023-12-15\",\n    \"time\": \"10:00\",\n    \"max_seats\": 5\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/speaker/create-session",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"speaker",
+								"create-session"
+							]
+						},
+						"description": "Create a new session slot (speaker only)."
+					},
+					"response": [
+						{
+							"name": "Session Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"date\": \"2023-12-15\",\n    \"time\": \"10:00\",\n    \"max_seats\": 5\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/speaker/create-session",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"speaker",
+										"create-session"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Session created successfully!\",\n    \"session_id\": \"60a1c5f9a6e6c3001c0a5b8d\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Book Session (User)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session_id\": \"60a1c5f9a6e6c3001c0a5b8d\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/book-session",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"book-session"
+							]
+						},
+						"description": "Book a seat in an available session (user only)."
+					},
+					"response": [
+						{
+							"name": "Booking Successful",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"session_id\": \"60a1c5f9a6e6c3001c0a5b8d\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/book-session",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"book-session"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Session booked successfully!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "My Bookings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/my-bookings",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"my-bookings"
+							]
+						},
+						"description": "Get list of bookings (for users) or sessions (for speakers)."
+					},
+					"response": [
+						{
+							"name": "User Bookings",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/my-bookings",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"my-bookings"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"bookings\": [\n        {\n            \"booking_id\": \"60a1c6f9a6e6c3001c0a5b8e\",\n            \"session_id\": \"60a1c5f9a6e6c3001c0a5b8d\",\n            \"date\": \"2023-12-15\",\n            \"time\": \"10:00\",\n            \"speaker_name\": \"John Smith\",\n            \"expertise\": \"JavaScript Development\",\n            \"price_per_session\": 75.00\n        }\n    ],\n    \"count\": 1\n}"
+						},
+						{
+							"name": "Speaker Sessions",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/my-bookings",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"my-bookings"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"bookings\": [\n        {\n            \"session_id\": \"60a1c5f9a6e6c3001c0a5b8d\",\n            \"date\": \"2023-12-15\",\n            \"time\": \"10:00\",\n            \"max_seats\": 5,\n            \"seats_booked\": 1,\n            \"booked_users\": [\n                {\n                    \"user_id\": \"60a1c3f9a6e6c3001c0a5b8a\",\n                    \"name\": \"Jane Doe\",\n                    \"email\": \"jane.doe@example.com\"\n                }\n            ]\n        }\n    ],\n    \"count\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Cancel Booking",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"booking_id\": \"60a1c6f9a6e6c3001c0a5b8e\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/cancel-booking",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"cancel-booking"
+							]
+						},
+						"description": "Cancel an existing booking (user only)."
+					},
+					"response": [
+						{
+							"name": "Cancellation Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"booking_id\": \"60a1c6f9a6e6c3001c0a5b8e\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/cancel-booking",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cancel-booking"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Booking cancelled successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Submit Feedback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"booking_id\": \"60a1c6f9a6e6c3001c0a5b8e\",\n    \"rating\": 4,\n    \"feedback_text\": \"Session was very helpful!\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/submit-feedback",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"submit-feedback"
+							]
+						},
+						"description": "Submit rating and feedback for a completed session (user only)."
+					},
+					"response": [
+						{
+							"name": "Feedback Submission Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"booking_id\": \"60a1c6f9a6e6c3001c0a5b8e\",\n    \"rating\": 4,\n    \"feedback_text\": \"Session was very helpful!\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/submit-feedback",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"submit-feedback"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Feedback submitted successfully\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints for managing sessions, bookings, cancellations, and feedback."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "your_jwt_token_here",
+			"type": "string"
+		}
+	]
+} 
