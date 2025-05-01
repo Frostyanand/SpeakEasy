@@ -1,13 +1,13 @@
 # SpeakEasy API Documentation
 
-This comprehensive guide documents all available API endpoints in the SpeakEasy platform. It provides details on request formats, authentication requirements, and expected responses to help developers integrate with our system.
+This comprehensive guide documents all available API endpoints in the SpeakEasy platform. It provides details on request formats, authentication requirements, and expected responses to help developers integrate with our system. The instructions are for testing using Postman .
 
 ## Base URL
 
 All API endpoints are relative to the base URL:
 
 ```
-http://localhost:5000/api
+[http://localhost:5000/api](https://speakeasy-t7j8.onrender.com)
 ```
 
 ## Authentication
