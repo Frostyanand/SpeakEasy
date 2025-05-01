@@ -1,6 +1,7 @@
 # SpeakEasy - Speaker Session Booking System
 
 SpeakEasy is a comprehensive platform that connects speakers with users for booking and managing speaking sessions. The system facilitates session scheduling, booking management, and feedback collection, providing a seamless experience for both speakers and users.
+BACKEND IS DEPLOYED AT https://speakeasy-t7j8.onrender.com Test using Postman :) with this url , Refer to API_DOCUMENTATION for instructions on API Testing.
 
 ## Features
 
